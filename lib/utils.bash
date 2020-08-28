@@ -22,6 +22,10 @@ sort_versions() {
         LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
+get_platform() {
+    echo "$(uname)_x86_64"
+}
+
 list_github_tags() {
     git ls-remote --tags --refs "$GH_REPO" |
         grep -o 'refs/tags/.*' | cut -d/ -f3- |
@@ -35,12 +39,13 @@ list_all_versions() {
 }
 
 download_release() {
-    local version filename url
+    local version filename url platform
     version="$1"
     filename="$2"
+    platform=get_platform
 
     # TODO: Adapt the release URL convention for ds-to-dhall
-    url="$GH_REPO/releases/download/v${version}.tar.gz"
+    url="$GH_REPO/releases/download/${version}/ds-to-dhall_${version}_${platform}.tar.gz"
 
     echo "* Downloading ds-to-dhall release $version..."
     curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
