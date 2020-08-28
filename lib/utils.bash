@@ -40,7 +40,7 @@ download_release() {
     filename="$2"
 
     # TODO: Adapt the release URL convention for ds-to-dhall
-    url="$GH_REPO/archive/v${version}.tar.gz"
+    url="$GH_REPO/releases/download/v${version}.tar.gz"
 
     echo "* Downloading ds-to-dhall release $version..."
     curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
