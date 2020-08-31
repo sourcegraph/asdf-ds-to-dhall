@@ -64,16 +64,18 @@ install_version() {
 
     # TODO: Adapt this to proper extension and adapt extracting strategy.
     local release_file="$install_path/ds-to-dhall_${version}_${platform}.tar.gz"
+    local install_path_bin="${install_path}/bin"
     (
-        mkdir -p "$install_path"
+        mkdir -p "$install_path_bin"
         download_release "$version" "$release_file"
-        tar -xzf "$release_file" -C "$install_path" --strip-components=1 || fail "Could not extract $release_file"
+        tar -xzf "$release_file" -C "${install_path_bin}" --strip-components=1 || fail "Could not extract $release_file"
         rm "$release_file"
 
         # TODO: Asert ds-to-dhall executable exists.
         local tool_cmd
         tool_cmd="$(echo "ds-to-dhall --help" | cut -d' ' -f2-)"
-        test -x "$install_path/bin/$tool_cmd" || fail "Expected $install_path/bin/$tool_cmd to be executable."
+        ls "${install_path_bin}"
+        test -x "${install_path_bin}/$tool_cmd" || fail "Expected ${install_path_bin}/$tool_cmd to be executable."
 
         echo "ds-to-dhall $version installation was successful!"
     ) || (
