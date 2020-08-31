@@ -45,7 +45,7 @@ download_release() {
     platform=$(get_platform)
 
     # TODO: Adapt the release URL convention for ds-to-dhall
-    url="$GH_REPO/releases/download/${version}/ds-to-dhall_${version}_${platform}.tar.gz"
+    url="$GH_REPO/releases/download/v${version}/ds-to-dhall_${version}_${platform}.tar.gz"
 
     echo "* Downloading ds-to-dhall release $version..."
     curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
