@@ -73,9 +73,16 @@ install_version() {
 
         # TODO: Asert ds-to-dhall executable exists.
         local tool_cmd
-        tool_cmd="$(echo "ds-to-dhall --help" | cut -d' ' -f2-)"
-        ls "${install_path_bin}"
-        test -x "${install_path_bin}/$tool_cmd" || fail "Expected ${install_path_bin}/$tool_cmd to be executable."
+        tool_cmd="${install_path_bin}/ds-to-dhall"
+
+        test -x "${tool_cmd}" || fail "Expected ${tool_cmd} to be executable."
+
+        local test_cmd
+        test_cmd="${tool_cmd} --help"
+        if ! "${test_cmd} --help"; then
+            "'${test_cmd}' failed."
+            exit 1
+        fi
 
         echo "ds-to-dhall $version installation was successful!"
     ) || (
