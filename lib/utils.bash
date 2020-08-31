@@ -34,11 +34,15 @@ list_all_versions() {
     list_github_tags
 }
 
+get_platform() {
+    echo "$(uname)_x86_64"
+}
+
 download_release() {
     local version filename url platform
     version="$1"
     filename="$2"
-    platform="$(uname)_x86_64"
+    platform=$(get_platform)
 
     # TODO: Adapt the release URL convention for ds-to-dhall
     url="$GH_REPO/releases/download/${version}/ds-to-dhall_${version}_${platform}.tar.gz"
@@ -51,13 +55,15 @@ install_version() {
     local install_type="$1"
     local version="$2"
     local install_path="$3"
+    local platform
+    platform=$(get_platform)
 
     if [ "$install_type" != "version" ]; then
         fail "asdf-ds-to-dhall supports release installs only"
     fi
 
     # TODO: Adapt this to proper extension and adapt extracting strategy.
-    local release_file="$install_path/ds-to-dhall-$version.tar.gz"
+    local release_file="$install_path/ds-to-dhall_${version}_${platform}.tar.gz"
     (
         mkdir -p "$install_path"
         download_release "$version" "$release_file"
