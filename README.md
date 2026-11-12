@@ -17,16 +17,13 @@
 # Dependencies
 
 - `bash`, `curl`, `tar`: generic POSIX utilities.
-- `SOME_ENV_VAR`: set this environment variable in your shell config to load the correct version of tool x.
 
 # Install
 
 Plugin:
 
 ```shell
-asdf plugin add ds-to-dhall
-# or
-asdf plugin add https://github.com/sourcegraph/asdf-ds-to-dhall.git
+asdf plugin add ds-to-dhall https://github.com/sourcegraph/asdf-ds-to-dhall.git
 ```
 
 ds-to-dhall:
@@ -36,7 +33,7 @@ ds-to-dhall:
 asdf list-all ds-to-dhall
 
 # Install specific version
-asdf install ds-to-dhall latest
+asdf install ds-to-dhall 0.4.0
 
 # Set a version globally (on your ~/.tool-versions file)
 asdf global ds-to-dhall latest
